@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block content %} 
+<main>
+    
+      <div class="top-total sidebar">
+            <div class="searched" style="width: 100%;">
+              <div><h7> Searched for: {{ search }}</h7></div>
+            </div>
+      </div>
+      <div class="item_wrapper">
+        <div class="row row_wrapper">
+          {% for item in items %}
+            <div class="col-sm-3 text-center board" id="column">
+              <a href="{{ url_for('main.item',item_id=item.id) }}" class="panel_button">
+                <div class="panel">
+                  <div class="item_name"><h3 >{{ item.name }}</h3></div>
+                  <div class="photo_wrapper">
+                    <img src="{{ url_for('main.static', filename='img/'+ item.name + '/' + item.image_file)  }}">
+                  </div>
+                  <div>
+                    <h5>Price: {{ item.price }}</h5>
+                  </div>
+                  <div class="buy_button">
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase">Buy</button>
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
+{% endblock content %}

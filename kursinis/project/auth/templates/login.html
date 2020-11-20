@@ -1,0 +1,47 @@
+{% extends "login_layout.html" %}
+{% block content %} 
+    <form method="POST" class="form-signin" action="">
+      {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control form-rounded form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control form-rounded form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-rounded form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control form-rounded form-control-lg") }}
+                {% endif %}
+            </div>                  
+        <div class="custom-control custom-checkbox mb-3">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+        </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-lg btn-primary btn-block text-uppercase") }}
+        </div>
+        <div class="text-center">
+            <small class="text-muted">
+                Dont have An Account? <a class="ml-2" href="{{ url_for('auth.register') }}">Sign Up</a>
+            </small>
+        </div>
+          <hr class="my-4">
+    </form>
+{% endblock content %}

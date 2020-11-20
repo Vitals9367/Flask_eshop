@@ -1,0 +1,77 @@
+{% extends "index.html" %}
+{% block content %}
+<main>
+	<div class="checkout-content">
+		<div class="" style="width: 100%">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="text-center alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        </div>
+		<div class="checkout-panel">
+			<div class="payment-panel-content">
+				<h5 style="padding-top: 15px;">Payment</h5>
+				<h7 style="padding-bottom: 15px;">Total Price: {{ order.price }}</h7>
+
+						<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+						<script>
+						    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5000/order/payment';
+						    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5000/order/execute';
+
+						    paypal.Button.render({
+
+						        env: 'sandbox', // Or 'sandbox'
+
+						        commit: true, // Show a 'Pay Now' button
+
+						        payment: function() {
+						            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+						                return data.paymentID;
+						            });
+						        },
+
+						        onAuthorize: function(data) {
+						            return paypal.request.post(EXECUTE_PAYMENT_URL, {
+						                paymentID: data.paymentID,
+						                payerID:   data.payerID
+						            }).then(function(res) {
+
+						                console.log(res.success)
+						                // The payment is complete!
+						                // You can now show a confirmation message to the customer
+						            });
+						        }
+
+						    }, '#paypal-button');
+						</script>
+						<div style="padding-bottom: 20px; padding-top: 10px;">
+							<form action="{{ url_for('main.pay',order_id=order.id) }}" method="POST">
+					          <script
+					            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+					            data-key="{{ pub_key }}"
+					            data-amount="{{ order.price * 100}}"
+					            data-name="Demo Site"
+					            data-description="Widget"
+					            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+					            data-locale="auto">
+					          </script>
+					        </form>
+				        </div>
+        			  <div class="form-group obt">
+	                  <a href="{{ url_for('main.cart') }}">
+	                    <button type="button" style="background-color: red !important;" class="payment-btn btn btn-lg btn-primary btn-block text-uppercase">
+	                      Cancel
+                    	</button>
+                  	</a>
+               </div>
+			</div>	
+		</div>
+	</div>
+</main>
+{% endblock content %}

@@ -1,0 +1,116 @@
+{% extends "index.html" %}
+{% block content %}
+<main>
+	<div style="width: 100%">
+	{% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="text-center alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="cart_page" style="width: 100%">
+	    <div class="sidebar row">
+	    	<div class="sidebar-content">
+	    		<div class="top-total">
+	    			<div style="width: 100%;">
+				    	<div><h7> Items In Cart: {{ citems|length }}</h7></div>
+				    	<div><h7> Total price: {{ amount }}</h7></div>
+			    	</div>
+			    	<div style="margin-left: 20px; ">
+						<a href="{{ url_for('main.clear_cart') }}">
+	            			<button type="button" style="background-color: red !important;" class="clear-cart-btn btn btn-lg btn-primary btn-block text-uppercase">
+	            				Clear Cart
+	            			</button>
+            			</a>
+        			 </div>
+        			 <div style="margin-left: 20px;">
+						<a href="{{ url_for('main.order_all') }}">
+	            			<button type="button" class="clear-cart-btn btn btn-lg btn-primary btn-block text-uppercase">
+	            				Order All
+	            			</button>
+            			</a>
+        			 </div>
+        			 <form method="POST" action="/order_selected">
+        			 <div style="margin-left: 20px;">
+	            			<button type="submit" class="clear-cart-btn btn btn-lg btn-primary btn-block text-uppercase">
+	            				Order Selected
+	            			</button>
+        			 </div>
+		    	</div>
+		    	<div style="margin-top: 25px;">
+		    		<input type="checkbox" onClick="toggle(this)" /> Toggle All<br/>
+		    	</div>
+		    	<div class="end">
+		    	</div>
+	    	</div>
+	    </div>
+		<div class="item_frame_wrapper cw">
+				{% for citem in citems %}
+		        <div class="row" id="ifwc" >
+		            <div class="item_frame" style="width: 100%">
+						<div class="cart_content">
+		            		<div class="cart_item">
+			            		<div class="row text-center">
+		            				<div class="top">		            					
+		            						<input type="checkbox" value="{{ citem.id }}" name="id">
+			            					<div class="x-div">
+			            						<a href="{{ url_for('main.remove_item',item_id=citem.id) }}">
+			            							<span class="close">
+			            								x
+			            							</span>
+			            						</a>
+			            					</div>	            						
+		            				</div>
+		            			</div>
+		            		
+		            		<div class="row text-center cart-btns">
+		            			<div class=" col-md cart_image_div">
+		            				<div class="" style="height: 100%; margin-top: 10px">
+		            					<div class="cart-name">
+			            					<div><h5>{{ citem.defined_item.item.name }}</h5></div>
+			            					<div style="margin-bottom: 10px"><h7> Added: {{ citem.date_added.strftime('%Y-%m-%d') }}</h7></div>
+		            					</div>
+		            				<img src="{{ url_for('main.static', filename='img/'+ citem.defined_item.item.name + '/' + citem.defined_item.item.image_file) }}">
+		            				</div>
+		            			</div>
+		            			<div class="col-md" style="padding-top: 10px;">
+		            				<div><p>{{ citem.defined_item.item.description }}</p></div>
+		            				<div><h7> Size: {{ citem.size }}</h7></div>
+		            				<div style="padding-top: 15px;"><h5> Price: {{ citem.defined_item.item.price }}</h5></div>
+		            				<div><h7> Amount: {{ citem.defined_item.amount }}</h7></div>	    				
+		            			</div>
+								<div class="col-md" style="width: 100%;">
+									<div class="remove_frm_cart text-center">
+										<a href="{{ url_for('main.make_order',item_id=citem.defined_item.id) }}">
+											<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase">Order Item</button>
+										</a>
+									</div>
+									<div class="remove_frm_cart text-center">
+										<a href="{{ url_for('main.item',item_id=citem.defined_item.item.id) }}">
+											<button type="button" class="btn btn-lg btn-primary btn-block text-uppercase">View Item</button>
+										</a>
+									</div>
+								</div>
+								</div>  
+		            		</div>
+		            	</div>
+		            </div>
+				</div>
+	          	{% endfor %}
+	          	</form>
+		</div>
+		</div>
+	</div>
+</main>
+	<script language="JavaScript">
+	function toggle(source) {
+  checkboxes = document.getElementsByName('id');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+	</script> 
+{% endblock content %}

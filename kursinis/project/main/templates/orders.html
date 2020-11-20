@@ -1,0 +1,74 @@
+{% extends "index.html" %}
+{% block content %}
+<main>
+		<div class="" style="width: 100%">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="text-center alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        </div>
+        <div class="orders-content">
+          <div class="order-panel" style="padding:10px;"><h7> Orders: {{ orders|length }}</h7></div>
+          {% for order in orders %}
+              <div class="order-panel">
+                  <div class="order-panel-content">
+                    <h7> Order: #{{ order.id }}</h7><h7 style="margin-left: 2px;"> | {{ order.date.strftime('%Y-%m-%d') }}</h7>
+                    <br>
+                    {% if order.paid %}
+                    <h7>Paid: Yes</h7>
+                    {% else %}
+                    <h7>Paid: No</h7>
+                    {% endif %}
+                    <ul>
+                    {% for item in order.order_items %}
+                        <li>
+                          <div class="checkout-list-items">
+                            <h5> {{ item.defined_item.amount }} X {{ item.defined_item.item.name }}</h5>
+                            <img src="{{ url_for('main.static', filename='img/'+ item.defined_item.item.name + '/' + item.defined_item.item.image_file) }}" class="checkout-item-img">
+                            <h7> Size: {{ item.defined_item.size }}</h7>
+                            <h7> Price: {{ item.defined_item.item.price }}</h7>
+                            <h7>{{ item.defined_item.item.description }}</h7>
+                          </div>
+                        </li>
+                        <hr>
+                    {% endfor %}
+                    </ul>
+                    <div class="checkout-total">
+                      <h6> Amount of items: {{ order.order_items |length }}</h6>
+                      <h6> Total price: {{ order.price }}</h6>
+                    </div>
+                    <div class="orders-btns">
+                    {% if order.paid %}
+                    <div class="form-group obt">
+                        <button disabled type="button" class="orders-payment-btn btn btn-lg btn-primary btn-block text-uppercase">
+                          Proceed To Payment
+                        </button>
+                   </div>
+                    {% else %}
+                <div class="form-group obt">
+                  <a href="{{ url_for('main.order_payment',order_id=order.id) }}">
+                    <button type="button" class="orders-payment-btn btn btn-lg btn-primary btn-block text-uppercase">
+                      Proceed To Payment
+                    </button>
+                  </a>
+               </div>
+                <div class="form-group obt">
+                  <a href="{{ url_for('main.cancel_order',order_id=order.id) }}">
+                    <button type="button"  style="background-color: red !important;" class="orders-payment-btn btn btn-lg btn-primary btn-block text-uppercase">
+                      Cancel Order
+                    </button>
+                  </a>
+               </div>
+                  {% endif %}
+                  </div>
+                  </div>
+              </div>
+          {% endfor %}
+        </div>
+</main>
+{% endblock content %}
