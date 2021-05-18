@@ -29,7 +29,6 @@ numpy==1.19.4
 pandas==1.1.4
 paypalrestsdk==1.13.1
 pycparser==2.20
-pyodbc==4.0.30
 pyOpenSSL==19.1.0
 python-dateutil==2.8.1
 python-editor==1.0.4

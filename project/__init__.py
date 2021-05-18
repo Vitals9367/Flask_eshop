@@ -16,6 +16,8 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     migrate = Migrate(app, db)
 
+    db.create_all()
+
     from project.auth.routes import auth
     from project.main.routes import main
     from project.profile.routes import profile
