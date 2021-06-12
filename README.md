@@ -8,4 +8,4 @@ Made during second semester of my studies at Kaunas University of Applied Scienc
 ***Hosting ->*** Heroku<br/>
 ***Payments ->*** Stripe<br/>
 
-👉 *https://flaskeshop.herokuapp.com/*
+👉 [eShop Website](https://flaskeshop.herokuapp.com/)
