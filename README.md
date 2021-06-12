@@ -1,5 +1,5 @@
 # Flask Eshop #
-🛒 Ecommerce site made with flask microframework.<br/>
+🛒 Ecommerce site made with Flask microframework.<br/>
 Made during second semester of my studies at Kaunas University of Applied Sciences.<br/>
 
 ***Frontend ->*** HTML Jinja templates / CSS / JS<br/>
