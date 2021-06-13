@@ -9,7 +9,7 @@ Made during second semester of my studies at Kaunas University of Applied Scienc
 ***Hosting ->*** Heroku<br/>
 ***Payments ->*** Stripe<br/>
 
-👉 [eShop Website](https://flaskeshop.herokuapp.com/)<br/>
+👉 [eShop Website](https://flaskeshop.herokuapp.com/)<br/><br/>
 🔗 [Xamarin Mobile App](https://github.com/Vitals9367/Xamarin_eshop_app)<br/>
 🔗 [Xamarin Mobile App API](https://github.com/Vitals9367/Xamarin_eshop_flask_api)
 
